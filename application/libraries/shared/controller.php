@@ -197,11 +197,11 @@ namespace Shared {
             $mongoDB = Registry::get("MongoDB");
             if (!$mongoDB) {
                 $mongo = new \MongoClient();
-                $mongoDB = $mongo->selectDB("stats");
+                $mongoDB = $mongo->selectDB("fbapp");
                 Registry::set("MongoDB", $mongoDB);
             }
 
-            // schedule: load user from session           
+            // schedule: load user from session
             Events::add("framework.router.beforehooks.before", function($name, $parameters) {
                 $session = Registry::get("session");
                 $controller = Registry::get("controller");
