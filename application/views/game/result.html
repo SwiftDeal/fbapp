@@ -1,0 +1,68 @@
+<section class="bg-alt">
+    <div class="container fadeInUp">
+        <div class="row">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- dinchak1 -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2202368153151998"
+                 data-ad-slot="5152090668"
+                 data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <div class="col-md-8">
+                <div class="jumbotron">
+                    <h3 class="text-center">{echo $campaign->title}</h3>
+                    <p class="text-center"><img src="{echo CDN.'uploads/images/'.$participant->image}" class="img-thumbnail"></p>
+					<p class="lead">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- dinchak2 -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-2202368153151998"
+                         data-ad-slot="8105557069"
+                         data-ad-format="auto"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>                    
+                        <div class="fb-share-button" data-href="http://dinchakapps.com/game/result/{$participant->id}" data-layout="link"></div>
+                        <button type="button" class="btn btn-success btn-lg btn-block fbLogin" data-action="campaign" data-campaign="{echo $campaign->id}">Click to Find {echo $campaign->title}</button>
+                        <small><div class="fb-send" data-href="http://dinchakapps.com/game/result/{$participant->id}"></div></small>
+                    </p>
+                    <p class="lead">{echo $campaign->description}</p>
+             </div>
+            </div>
+			<br>
+			<br>
+            <div class="col-md-4">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- dinchak_3 -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-2202368153151998"
+                         data-ad-slot="9508238267"
+                         data-ad-format="auto"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>                
+            </div>
+        </div>
+    </div>
+    <div class="container fadeInUp">
+        <div class="row">
+            <div class="card-deck-wrapper">
+                {foreach $item in $items} {script $item = Campaign::first(array("id = ?" => $item->campaign_id), array("id", "live", "image", "title", "description"))}
+                <div class="col-md-4 col-xs-12">
+                    <div class="card">
+                        <a href="/game/view/{echo Framework\StringMethods::url($item->title)}/{echo $item->id}"><img class="card-img-top img-responsive" src="{echo CDN}uploads/images/{echo $item->image}" alt="Look Like Image"></a>
+                        <div class="card-block">
+                            <h4 class="card-title">{echo $item->title}</h4>
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</section>

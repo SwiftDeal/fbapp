@@ -1,0 +1,36 @@
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Dashboard</h1>
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="list-group">
+                            <a class="list-group-item active text-center">
+                                <i class="fa fa-line-chart"></i> Data
+                            </a>
+                            <a href="/admin/search?model=user&key=live&sign=equal&value=1" class="list-group-item"><i class="fa fa-users fa-2x"></i>  Users <span class="badge">{echo Shared\Markup::nice_number(User::count())}</span></a>
+                            <a href="/game/all.html" class="list-group-item"><i class="fa fa-list fa-2x"></i>  Campaigns <span class="badge">{echo Shared\Markup::nice_number(Campaign::count())}</span></a>
+                            <a href="/config/participants.html" class="list-group-item"><i class="fa fa-thumbs-o-up fa-2x"></i>  Participants <span class="badge">{echo Shared\Markup::nice_number(Participant::count())}</span></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="list-group">
+                            <a class="list-group-item active text-center">
+                                <i class="fa fa-pie-chart"></i> Monitor
+                            </a>
+                            <a href="/admin/search?model=user&key=admin&sign=equal&value=1" class="list-group-item"><i class="fa fa-user-secret fa-2x"></i>  Admin <span class="badge">{echo Shared\Markup::nice_number(User::count(array("admin = ?" => 1)))}</span></a>
+                        </div>
+                    </div>                    
+
+                </div>
+                <div class="row">
+                    <p>Make sure that Campaign image is less than 100kb for fast FB upload.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

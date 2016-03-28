@@ -1,0 +1,14 @@
+<section class="bg-alt">
+    <div class="container fadeInUp">
+        <div class="card-columns">
+            {foreach $item in $items}
+            <div class="card">
+                <img src="{echo CDN}uploads/images/{echo $item->base_im}" alt="">
+                <p class="caption">
+                    <a class="fbLogin" data-action="campaign" data-campaign="{echo $item->id}"><i class="ion-social-facebook"></i> Continue with FB</a>
+                </p>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</section>

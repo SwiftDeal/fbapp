@@ -1,0 +1,118 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header text-center">Game Activity</h3> {if isset($success)}
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                Saved <strong>Successfully!</strong>
+            </div>
+            {/if}
+            <div class="panel panel-default">
+                <table class="table panel-body">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {script $parts = explode("/", URL)}
+                    {script $pos = count($parts) - 2}
+                    {foreach $i in $items}
+                        <tr>
+                            <td><img src="{echo CDN}uploads/images/{echo $i->base_im}"></td>
+                            <td>
+                                <a href="/items/remove/{echo $i->id}/{echo $parts[$pos]}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <form method="post" action="" enctype="multipart/form-data">
+                <div class="panel panel-default panel-body">
+                    <div class="form-group">
+                        <label>Base Image</label>
+                        <input type="file" class="form-control" name="base_im">
+                        <img id="img" class="coords" src="" />
+                    </div>
+                    <hr>
+                    <label><input type="radio" name="coords" value="usr"> User Image Coordinates</label>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">USR_X</div>
+                                <input type="number" class="form-control" placeholder="" name="usr_x" required="" style="width: 100px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">USR_Y</div>
+                                <input type="number" class="form-control" placeholder="" name="usr_y" required="" style="width: 100px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">Width</div>
+                                <input type="number" class="form-control" placeholder="" name="usr_w" required="" style="width: 100px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">Height</div>
+                                <input type="number" class="form-control" placeholder="" name="usr_h" required="" style="width: 100px;">
+                            </div>
+                        </div>
+                    </div><br>
+                    <label><input type="radio" name="coords" value="txt"> User Text Coordinates</label>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">TXT_X</div>
+                                    <input type="number" class="form-control" placeholder="" name="txt_x" required="" style="width: 100px;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">TXT_Y</div>
+                                    <input type="number" class="form-control" placeholder="" name="txt_y" required="" style="width: 100px;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">Size</div>
+                                    <input type="number" class="form-control" placeholder="" name="txt_size" required="" style="width: 100px;" value="13">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">Angle</div>
+                                    <input type="number" class="form-control" placeholder="" name="txt_angle" required="" style="width: 100px;" value="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">Color</div>
+                                    <input type="text" class="form-control" placeholder="" name="txt_color" required="" style="width: 100px;" value="#000000">
+                                </div>
+                            </div>
+                        </div>
+                    <hr>
+                    <div class="form-group">
+                        <label>Gender</label><br>
+                        <input type="radio" class="radio-inline" name="gender" value="male" checked=""> Male
+                        <input type="radio" class="radio-inline" name="gender" value="female"> Female
+                        <input type="radio" class="radio-inline" name="gender" value="other"> Other
+                    </div>
+                </div>
+                <input type="hidden" name="action" value="shuffle">
+                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check-circle"></i> Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("input[name=base_im]").change(readImage);
+});
+</script>

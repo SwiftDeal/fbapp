@@ -1,0 +1,16 @@
+<section class="bg-alt">
+    <div class="container fadeInUp">
+        <div class="card-deck-wrapper">
+            {foreach $item in $items}
+            <div class="col-md-3 col-xs-12">
+                <div class="card">
+                    <a href="/game/view/{echo Framework\StringMethods::url($item->title)}/{echo $item->id}"><img class="card-img-top img-responsive" src="{echo CDN}uploads/images/{echo $item->image}" alt="Look Like Image"></a>
+                    <div class="card-block">
+                        <a href="/game/view/{echo Framework\StringMethods::url($item->title)}/{echo $item->id}"><h4 class="card-title">{echo $item->title}</h4>
+                    </div>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,71 @@
+<section class="bg-alt">
+    <div class="container fadeInUp">
+        <div class="row">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- dinchak1 -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2202368153151998"
+                 data-ad-slot="5152090668"
+                 data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <div class="col-md-8">
+                <div class="jumbotron">
+                    <p class="lead">
+                        <b class="text-center">Your Result Is Ready.</b>
+						<br>
+                        <!--<p class="text-center"><img src="{echo CDN.'uploads/images/'.$participant->image}" class="img-thumbnail"></p>-->
+                        <b><small>Now Click on Share To Watch Button To Watch Your Result. </small></b>
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- dinchak2 -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-2202368153151998"
+                             data-ad-slot="8105557069"
+                             data-ad-format="auto"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                        <button class="btn btn-success btn-lg btn-block fbshare" data-fbshare="http://game.pancilapps.com/game/result/{$participant->id}?utm_source={echo urlencode($campaign->title)}&amp;utm_campaign={echo urlencode($campaign->title)}&amp;utm_medium=facebook" data-layout="link">Share on Facebook</button>
+                    </p>
+                    <small><div class="fb-send" data-href="http://game.pancilapps.com/game/result/{$participant->id}?utm_source={echo urlencode($campaign->title)}&amp;utm_campaign={echo urlencode($campaign->title)}&amp;utm_medium=facebook"></div></small>
+                    <p class="lead">{echo $campaign->description}</p>
+					                
+                </div>
+            </div>
+			<br>
+			<br>
+            <div class="col-md-4">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- dinchak_3 -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-2202368153151998"
+                         data-ad-slot="9508238267"
+                         data-ad-format="auto"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container fadeInUp">
+        <div class="row">
+            <div class="card-deck-wrapper">
+                {foreach $item in $items} {script $item = Campaign::first(array("id = ?" => $item->campaign_id), array("id", "live", "image", "title", "description"))}
+                <div class="col-md-4 col-xs-12">
+                    <div class="card">
+                        <a href="/game/view/{echo Framework\StringMethods::url($item->title)}/{echo $item->id}"><img class="card-img-top img-responsive" src="{echo CDN}uploads/images/{echo $item->image}" alt="Look Like Image"></a>
+                        <div class="card-block">
+                            <h4 class="card-title">{echo $item->title}</h4>
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</section>

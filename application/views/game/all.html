@@ -1,0 +1,33 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header text-center">All Games</h3>
+            <div class="panel panel-default">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Campaign</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $c in $campaigns}
+                        <tr>
+                            <td><a href="/config/{echo $c->type}item/{echo $c->type_id}">{$c->title}</a></td>
+                            <td><span class="label label-info">{echo ucfirst($c->type)}</span></td>
+                            <td>
+                                {if $c->live}
+                                <a href="/game/publish/{echo $c->id}/0" class="btn btn-xs btn-warning"><i class="fa fa-ban"></i> Unpublish</a>
+                                {/if} {else}
+                                <a href="/game/publish/{echo $c->id}/1" class="btn btn-xs btn-success"><i class="fa fa-check"></i> Publish</a>
+                                {/else}
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

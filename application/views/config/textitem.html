@@ -1,0 +1,53 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header text-center">Game Activity</h3> {if isset($success)}
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                Saved <strong>Successfully!</strong>
+            </div>
+            {/if}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <img id="img" class="center-block" src="{echo CDN}uploads/images/{$text->base_im}" />
+                </div>
+                <table class="table panel-body">
+                    <thead>
+                        <tr>
+                            <th>Text</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {script $parts = explode("/", URL)}
+                    {script $pos = count($parts) - 2}
+                    {foreach $i in $items}
+                        <tr>
+                            <td>{echo $i->text}</td>
+                            <td>
+                                <a href="/items/remove/{echo $i->id}/{echo $parts[$pos]}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <form method="post" action="">
+                <div class="panel panel-default panel-body">
+                    <div class="form-group">
+                        <label>Shuffle Text</label>
+                        <input type="text" class="form-control" name="text" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label><br>
+                        <input type="radio" class="radio-inline" name="gender" value="male" checked=""> Male
+                        <input type="radio" class="radio-inline" name="gender" value="female"> Female
+                        <input type="radio" class="radio-inline" name="gender" value="other"> Other
+                    </div>
+                </div>
+                <input type="hidden" name="action" value="shuffle">
+                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check-circle"></i> Save</button>
+            </form>
+        </div>
+    </div>
+</div>
