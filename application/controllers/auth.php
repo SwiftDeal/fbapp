@@ -10,6 +10,26 @@ use Framework\Registry as Registry;
 use \Curl\Curl;
 
 class Auth extends Controller {
+    /**
+     * @protected
+     */
+    public function _admin() {
+        if (!$this->user->admin) {
+            $this->setUser(false);
+            throw new Router\Exception\Controller("Not a valid admin user account");
+        }
+    }
+
+    /**
+     * @protected
+     */
+    public function _session() {
+        $user = $this->getUser();
+        if ($user) {
+            header("Location: /profile.html");
+            exit();
+        }
+    }
     
     protected function _register() {
         $user = new User(array(
@@ -29,6 +49,14 @@ class Auth extends Controller {
         return $user;
     }
 
+    public function logout() {
+        session_destroy();
+        $this->redirect("/");
+    }
+
+    /**
+     * @before _session
+     */
     public function fbLogin() {
         $this->JSONview();
         $view = $this->getActionView();

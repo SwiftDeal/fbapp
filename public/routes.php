@@ -27,6 +27,11 @@ $routes = array(
         "pattern" => "home",
         "controller" => "home",
         "action" => "index"
+    ),
+    array(
+        "pattern" => "logout",
+        "controller" => "auth",
+        "action" => "logout"
     )
 );
 

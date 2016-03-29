@@ -47,7 +47,7 @@ class User extends Shared\Model {
      * @length 32
      * @index
      * 
-     * @validate required, alpha, min(8), max(32)
+     * @validate required, alpha, min(4), max(32)
      * @label gender
      */
     protected $_gender;

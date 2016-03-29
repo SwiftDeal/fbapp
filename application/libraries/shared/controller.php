@@ -31,31 +31,10 @@ namespace Shared {
         /**
          * @protected
          */
-        public function _admin() {
-            if (!$this->user->admin) {
-                $this->setUser(false);
-                throw new Router\Exception\Controller("Not a valid admin user account");
-            }
-        }
-
-        /**
-         * @protected
-         */
         public function _secure() {
             $user = $this->getUser();
             if (!$user) {
                 header("Location: /home.html");
-                exit();
-            }
-        }
-
-        /**
-         * @protected
-         */
-        public function _session() {
-            $user = $this->getUser();
-            if ($user) {
-                header("Location: /profile.html");
                 exit();
             }
         }
@@ -84,11 +63,6 @@ namespace Shared {
 
         protected function changeDate($date, $day) {
             return date_format(date_add(date_create($date),date_interval_create_from_date_string("{$day} day")), 'Y-m-d');;
-        }
-        
-        public function logout() {
-            $this->setUser(false);
-            $this->redirect("/home");
         }
         
         public function noview() {
@@ -175,7 +149,6 @@ namespace Shared {
             $this->log(implode(",", $emails));
         }
 
-
         public function setUser($user) {
             $session = Registry::get("session");
             if ($user) {
@@ -252,7 +225,5 @@ namespace Shared {
             }
             parent::render();
         }
-
     }
-
 }

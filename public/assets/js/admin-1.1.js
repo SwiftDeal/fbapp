@@ -1,8 +1,3 @@
-(function(window, Model) {
-    window.request = Model.initialize();
-    window.opts = {};
-}(window, window.Model));
-
 $(function() {
     $('#side-menu').metisMenu();
 });
@@ -57,35 +52,32 @@ $(document).ready(function() {
         $('#stats').html('<p class="text-center"><i class="fa fa-spinner fa-spin fa-5x"></i></p>');
         e.preventDefault();
         var data = $(this).serializeArray();
-        request.read({
+        Request.get({
             action: "admin/dataAnalysis",
             data: data,
-            callback: function(data) {
-                $('#stats').html('');
-                if (data.data) {
-                    Morris.Bar({
-                        element: 'stats',
-                        data: toArray(data.data),
-                        xkey: 'y',
-                        ykeys: ['a'],
-                        labels: ['Total']
-                    });
-                }
+        }, function(data) {
+            $('#stats').html('');
+            if (data.data) {
+                Morris.Bar({
+                    element: 'stats',
+                    data: toArray(data.data),
+                    xkey: 'y',
+                    ykeys: ['a'],
+                    labels: ['Total']
+                })
             }
         });
-    });
 
     $("#searchModel").change(function() {
         var self = $(this);
         $('#searchField').html('');
-        request.read({
+        Request.get({
             action: "admin/fields/" + this.value,
-            callback: function(data) {
-                var d = $.parseJSON(data);
-                $.each(d, function(field, property) {
-                    $('#searchField').append('<option value="' + field + '">' + field + '</option>');
-                })
-            }
+        }, function(data) {
+            var d = $.parseJSON(data);
+            $.each(d, function(field, property) {
+                $('#searchField').append('<option value="' + field + '">' + field + '</option>');
+            });
         });
     });
 

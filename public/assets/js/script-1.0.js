@@ -1,66 +1,3 @@
-(function(window) {
-
-    var Model = (function() {
-        function Model(opts) {
-            this.api = window.location.origin + '/';
-            this.ext = '.json';
-        }
-
-        Model.prototype = {
-            create: function(opts) {
-                var self = this,
-                    link = this._clean(this.api) + this._clean(opts.action) + this._clean(this.ext);
-                $.ajax({
-                    url: link,
-                    type: 'POST',
-                    data: opts.data,
-                }).done(function(data) {
-                    if (opts.callback) {
-                        opts.callback.call(self, data);
-                    }
-                }).fail(function() {
-                    console.log("error");
-                }).always(function() {
-                    //console.log("complete");
-                });
-            },
-            read: function(opts) {
-                var self = this,
-                    link = this._clean(this.api) + this._clean(opts.action) + this._clean(this.ext);
-                $.ajax({
-                    url: link,
-                    type: 'GET',
-                    data: opts.data,
-                }).done(function(data) {
-                    if (opts.callback) {
-                        opts.callback.call(self, data);
-                    }
-                }).fail(function() {
-                    console.log("error");
-                }).always(function() {
-                    //console.log("complete");
-                });
-
-            },
-            _clean: function(entity) {
-                return entity || "";
-            }
-        };
-        return Model;
-    }());
-
-    Model.initialize = function(opts) {
-        return new Model(opts);
-    };
-
-    window.Model = Model;
-}(window));
-
-(function (window, Model) {
-    window.request = Model.initialize();
-    window.opts = {};
-}(window, window.Model));
-
 // sandbox disable popups
 if (window.self !== window.top && window.name != "view1") {;
     window.alert = function() { /*disable alert*/ };
@@ -125,10 +62,11 @@ document.addEventListener("DOMContentLoaded", function() {
 })(jQuery);
 
 /**** FbModel: Controls facebook login/authentication ******/
-(function (window, $) {
+(function (window, $, Request) {
     var FbModel = (function () {
         function FbModel() {
             this.loaded = false;
+            this.loggedIn = false;
         }
 
         FbModel.prototype = {
@@ -142,31 +80,37 @@ document.addEventListener("DOMContentLoaded", function() {
                     version: 'v2.5'
                 });
                 this.loaded = true;
+                FB.getLoginStatus(function (response) {
+                    if (response.status === 'connected') {
+                        this.loggedIn = true;
+                    }
+                });
             },
             login: function(el) {
                 var self = this;
                 if (!this.loaded) {
                     self.init(window.FB);
                 }
-                window.FB.getLoginStatus(function(response) {
-                    if (response.status === 'connected') {
-                        self._info(el); // User logged into fb and app
-                    } else {
-                        window.FB.login(function(response) {
-                            if (response.status === 'connected') {
-                                self._info(el);
-                            } else {
-                                alert('Please allow access to your Facebook account, for us to enable direct login to the  FBGameApp');
-                            }
-                        }, {
-                            scope: 'public_profile, email'
-                        });
-                    }
-                });
+
+                if (!this.loggedIn) {
+                    window.FB.login(function(response) {
+                        if (response.status === 'connected') {
+                            self.loggedIn = true;
+                            self._info(el);
+                        } else {
+                            el.removeClass('disabled');
+                            alert('Please allow access to your Facebook account, for us to enable direct login to the  FBGameApp');
+                        }
+                    }, {
+                        scope: 'public_profile, email'
+                    });
+                } else {
+                    self._info(el);
+                }
             },
             _info: function(el) {
                 window.FB.api('/me?fields=name,email,gender', function(response) {
-                    window.request.create({
+                    Request.post({
                         action: 'auth/fbLogin',
                         data: {
                             action: 'fbLogin',
@@ -174,13 +118,13 @@ document.addEventListener("DOMContentLoaded", function() {
                             name: response.name,
                             fbid: response.id,
                             gender: response.gender
-                        },
-                        callback: function(data) {
-                            if (data.success == true) {
-                                alert("Successfully loggedin");
-                            } else {
-                                alert('Something went wrong');
-                            }
+                        }
+                    }, function(data) {
+                        el.removeClass('disabled');
+                        if (data.success) {
+                            alert("Successfully loggedin");
+                        } else {
+                            alert('Something went wrong');
                         }
                     });
                 });
@@ -190,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }());
 
     window.FbModel = new FbModel();
-}(window, jQuery));
+}(window, jQuery, window.Request));
 
 
 $(document).ready(function() {
@@ -201,7 +145,6 @@ $(document).ready(function() {
         e.preventDefault();
         $(this).addClass('disabled');
         FbModel.login($(this));
-        $(this).removeClass('disabled');
     });
 
     $(".fbshare").click(function(e) {
