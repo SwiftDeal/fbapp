@@ -70,28 +70,16 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         FbModel.prototype = {
-            init: function(FB) {
-                if (!FB) {
-                    return false;
-                }
-
-                FB.init({
-                    appId: '1687202661533796',
-                    version: 'v2.5'
-                });
-                this.loaded = true;
+            init: function() {
+                this.loaded = true; var self = this;
                 FB.getLoginStatus(function (response) {
                     if (response.status === 'connected') {
-                        this.loggedIn = true;
+                        self.loggedIn = true;
                     }
                 });
             },
             login: function(el) {
                 var self = this;
-                if (!this.loaded) {
-                    self.init(window.FB);
-                }
-
                 if (!this.loggedIn) {
                     window.FB.login(function(response) {
                         if (response.status === 'connected') {
@@ -139,7 +127,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 $(document).ready(function() {
     $.ajaxSetup({cache: true});
-    $.getScript('//connect.facebook.net/en_US/sdk.js', FbModel.init(window.FB));
+    $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
+        FB.init({
+            appId: '1687202661533796',
+            version: 'v2.5'
+        });
+        window.FbModel.init();
+    });
 
     $(".fbLogin").on("click", function(e) {
         e.preventDefault();
