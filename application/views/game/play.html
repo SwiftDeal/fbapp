@@ -28,9 +28,9 @@
                         <script>
                         (adsbygoogle = window.adsbygoogle || []).push({});
                         </script>
-                        <button class="btn btn-success btn-lg btn-block fbshare" data-fbshare="http://game.pancilapps.com/game/result/{$participant->id}?utm_source={echo urlencode($campaign->title)}&amp;utm_campaign={echo urlencode($campaign->title)}&amp;utm_medium=facebook" data-layout="link">Share on Facebook</button>
+                        <button class="btn btn-success btn-lg btn-block fbshare" data-fbshare="http://{echo $_SERVER['HTTP_HOST']}/game/result/{$participant->id}?utm_source={echo urlencode($campaign->title)}&amp;utm_campaign={echo urlencode($campaign->title)}&amp;utm_medium=facebook" data-layout="link">Share on Facebook</button>
                     </p>
-                    <small><div class="fb-send" data-href="http://game.pancilapps.com/game/result/{$participant->id}?utm_source={echo urlencode($campaign->title)}&amp;utm_campaign={echo urlencode($campaign->title)}&amp;utm_medium=facebook"></div></small>
+                    <small><div class="fb-send" data-href="http://{echo $_SERVER['HTTP_HOST']}/game/result/{$participant->id}?utm_source={echo urlencode($campaign->title)}&amp;utm_campaign={echo urlencode($campaign->title)}&amp;utm_medium=facebook"></div></small>
                     <p class="lead">{echo $campaign->description}</p>
 					                
                 </div>

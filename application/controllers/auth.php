@@ -54,9 +54,6 @@ class Auth extends Controller {
         $this->redirect("/");
     }
 
-    /**
-     * @before _session
-     */
     public function fbLogin() {
         $this->JSONview();
         $view = $this->getActionView();
@@ -66,10 +63,20 @@ class Auth extends Controller {
             $email = RequestMethods::post("email");
             $user = User::first(array("email = ?" => $email));
             if (!$user) {
-                $user = $this->_register();
+                try {
+                    $user = $this->_register();
+                } catch (\Exception $e) {
+                    $this->redirect("/");
+                }
             }
             $this->setUser($user);
             
+            $redirect = RequestMethods::post("loc", "");
+            if ($redirect != '') {
+                $token = Shared\Markup::uniqueString();
+                $session->set('CampaignAccessToken', $token);
+                $view->set("redirect", "/". $redirect . "/{$token}");
+            }
             $view->set("success", true);
         } else {
             $view->set("success", false);

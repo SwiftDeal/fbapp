@@ -97,20 +97,35 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             },
             _info: function(el) {
+                var loginType = el.data('action'), extra;
+
+                if (typeof loginType === "undefined") {
+                    extra = '';
+                } else {
+                    switch (loginType) {
+                        case 'campaign':
+                            extra = 'game/authorize/'+ el.data('campaign');
+                            break;
+
+                        default:
+                            extra = '';
+                            break;
+                    }
+                }
                 window.FB.api('/me?fields=name,email,gender', function(response) {
                     Request.post({
                         action: 'auth/fbLogin',
                         data: {
                             action: 'fbLogin',
+                            loc: extra,
                             email: response.email,
                             name: response.name,
                             fbid: response.id,
                             gender: response.gender
                         }
                     }, function(data) {
-                        el.removeClass('disabled');
-                        if (data.success) {
-                            alert("Successfully loggedin");
+                        if (data.success == true && data.redirect) {
+                            window.location.href = data.redirect;
                         } else {
                             alert('Something went wrong');
                         }
