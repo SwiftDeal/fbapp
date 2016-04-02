@@ -127,7 +127,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         if (data.success == true && data.redirect) {
                             window.location.href = data.redirect;
                         } else {
-                            alert('Something went wrong');
+                            console.log("Register Login not done");
+                            window.location.href = data.redirect;
                         }
                     });
                 });
