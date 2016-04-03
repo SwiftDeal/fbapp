@@ -25,14 +25,28 @@ class Game extends Config {
 
     public function result($participant_id) {
         $participant = Participant::first(array("id = ?" => $participant_id));
+        $user = User::first(array("id = ?" => $participant->user_id), array("name"));
         $campaign = Campaign::first(array("id = ?" => $participant->campaign_id));
+        $image = CDN . "uploads/images/" .$participant->image;
         $this->seo(array(
             "title" => $campaign->title, 
             "description" => $campaign->description,
-            "photo" => CDN . "uploads/images" .$participant->image,
+            "photo" => $image,
             "view" => $this->getLayoutView()
         ));
         $view = $this->getActionView();
+
+        $facebook = new Curl();
+        /*$facebook->post('https://graph.facebook.com/me/staging_resources', array(
+            'access_token' => '1687202661533796|8fea8d2c69a57f8e91fd48e6bd1131ba',
+            'object' => '{"url":"http://fbgameapp.com/game/result/'.$participant->id.'","title":"'.$campaign->title.'","image":"'.$image.'"}'
+        ));*/
+        
+        /*$facebook->post('https://graph.facebook.com/app/objects/website', array(
+            'access_token' => '1687202661533796|8fea8d2c69a57f8e91fd48e6bd1131ba',
+            'object' => '{"url":"http://fbgameapp.com/game/result/'.$participant->id.'","title":"'.$campaign->title.'","image":"'.$image.'"}'
+        ));*/
+        $facebook->close();
 
         $items = Participant::all(array(), array("DISTINCT campaign_id"), "created", "desc", 3, 1);
         $view->set("items", $items);
@@ -131,6 +145,18 @@ class Game extends Config {
 
         $participant = Participant::first(array("user_id = ?" => $this->user->id, "campaign_id = ?" => $campaign->id));
         $items = Participant::all(array(), array("DISTINCT campaign_id"), "created", "desc", 3, 1);
+
+        $title = $this->user->name." ".$campaign->title;
+        $image = CDN . "uploads/images/" .$participant->image;
+        $facebook = new Curl();
+        $facebook->post('https://graph.facebook.com/app/objects/website', array(
+            'access_token' => '1687202661533796|8fea8d2c69a57f8e91fd48e6bd1131ba',
+            'object' => '{"url":"http://fbgameapp.com/game/result/'.$participant->id.'","title":"'.$title.'","image":"'.$image.'"}'
+        ));
+        $facebook->close();
+
+        //echo "<pre>", print_r($facebook), "</pre>";
+
         $view->set("items", $items);
         $view->set("img", $img);
         $view->set("participant", $participant);

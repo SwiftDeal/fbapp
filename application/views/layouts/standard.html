@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+    <meta property="fb:app_id" content="1687202661533796" />
+    <meta property="og:type"   content="website" />
+    <meta property="og:title" content="{echo $seo->getTitle()}" />
+    <meta property="og:url" content="{echo URL}" />
+    <meta property="og:image" content="{echo $seo->getPhoto()}" />
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{echo strip_tags($seo->getDescription())}" />
     <meta name="keywords" content="{echo strip_tags($seo->getKeywords())}">
     <meta name="author" content="{echo $seo->getAuthor()}" />
-    <meta property="fb:app_id" content="179747022387337">
+    
     <title>{echo $seo->getTitle()}</title>
     <link rel="icon" href="/public/assets/img/favicon.ico">
     
