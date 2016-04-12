@@ -70,7 +70,7 @@ class Auth extends Controller {
                 }
             }
             $this->setUser($user);
-            $session->set('access_token', RequestMethods::post("access_token"));
+            $session->set('User\FB:$accessToken', RequestMethods::post("access_token"));
             
             $redirect = RequestMethods::post("loc", "");
             if ($redirect != '') {

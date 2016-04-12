@@ -7,6 +7,10 @@
     <meta property="og:title" content="{echo $seo->getTitle()}" />
     <meta property="og:url" content="{echo URL}" />
     <meta property="og:image" content="{echo $seo->getPhoto()}" />
+    {if isset($width) && isset($height)}
+    <meta property="og:image:width" content="{echo $width}" />
+    <meta property="og:image:height" content="{echo $height}" />
+    {/if}
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

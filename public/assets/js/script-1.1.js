@@ -65,14 +65,13 @@ document.addEventListener("DOMContentLoaded", function() {
 (function (window, $, Request) {
     var FbModel = (function () {
         function FbModel() {
-            this.loaded = false;
             this.loggedIn = false;
             this.accessToken = '';
         }
 
         FbModel.prototype = {
             init: function() {
-                this.loaded = true; var self = this;
+                var self = this;
                 FB.getLoginStatus(function (response) {
                     if (response.status === 'connected') {
                         self.loggedIn = true;
@@ -87,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             self.accessToken = response.authResponse.accessToken;
                             self.loggedIn = true;
                             self._info(el);
-                            console.log(self.accessToken);
                         } else {
                             el.removeClass('disabled');
                             alert('Please allow access to your Facebook account, for us to enable direct login to the  FBGameApp');
