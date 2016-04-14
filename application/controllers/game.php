@@ -40,7 +40,6 @@ class Game extends Config {
                         ->set("height", $info[1]);
         $view = $this->getActionView(); $session = Registry::get("session");
 
-
         $items = Participant::all(array(), array("DISTINCT campaign_id"), "created", "desc", 3, 1);
         $view->set("items", $items);
 
@@ -145,8 +144,6 @@ class Game extends Config {
         $facebook = new Curl();
         $facebook->post('https://graph.facebook.com/?id='. "http://". $_SERVER["HTTP_HOST"] ."/game/result/".$participant->id. '&scrape=true');
         $facebook->close();
-
-        //echo "<pre>", print_r($facebook), "</pre>";
 
         $view->set("items", $items);
         $view->set("img", $img);

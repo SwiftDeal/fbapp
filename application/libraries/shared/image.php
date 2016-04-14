@@ -21,6 +21,7 @@ class Image {
 		if (file_exists($image)) {
 		    $filename = pathinfo($image, PATHINFO_FILENAME);
 		    $extension = pathinfo($image, PATHINFO_EXTENSION);
+		    $extension = strtolower($extension);
 		    
 		    if ($filename && $extension) {
 		        $thumbnail = "{$filename}-{$width}x{$height}.{$extension}";
@@ -39,6 +40,7 @@ class Image {
 
 	public static function resource($file) {
         $extension = pathinfo($file, PATHINFO_EXTENSION);
+        $extension = strtolower($extension);
         switch ($extension) {
             case 'png':
                 $res = imagecreatefrompng($file);
@@ -59,6 +61,7 @@ class Image {
 	 */
 	public static function create($resource, $file) {
 		$extension = pathinfo($file, PATHINFO_EXTENSION);
+		$extension = strtolower($extension);
         switch ($extension) {
             case 'png':
                 $res = imagepng($resource, $file);

@@ -142,8 +142,17 @@ document.addEventListener("DOMContentLoaded", function() {
     window.FbModel = new FbModel();
 }(window, jQuery, window.Request));
 
-
 $(document).ready(function() {
+    fuckAdBlock.onDetected(function () {
+        alert('Please disable adblock and reload the page to play Games!!');
+        $('body').hide();
+    });
+    fuckAdBlock.onNotDetected(function () {
+        var b = $(body);
+        if (b.hasClass('hide')) {
+            b.removeClass('hide');
+        }
+    });
     $.ajaxSetup({cache: true});
     $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
         FB.init({
