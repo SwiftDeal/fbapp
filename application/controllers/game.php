@@ -52,13 +52,19 @@ class Game extends Config {
      */
     public function all() {
         $this->seo(array("title" => "All Games", "view" => $this->getLayoutView()));
-        $view = $this->getActionView();
+        $view = $this->getActionView(); $session = Registry::get("session");
 
         $limit = RequestMethods::get("limit", 10);
         $page = RequestMethods::get("page", 1);
 
         $campaign = Campaign::all(array(), array("*"), "created", "desc", $limit, $page);
         $count = Campaign::count();
+
+        $msg = $session->get('Game\delete:$msg');
+        if ($msg) {
+            $session->erase('Game\delete:$msg');
+            $view->set("message", $msg);
+        }
 
         $view->set("campaigns", $campaign);
         $view->set("count", $count);
@@ -149,5 +155,35 @@ class Game extends Config {
         $view->set("img", $img);
         $view->set("participant", $participant);
         $view->set("campaign", $campaign);
+    }
+
+    /**
+     * @before _secure, changeLayout, _admin
+     */
+    public function delete($game_id) {
+        $this->noview(); $session = Registry::get("session");
+        $campaign = Campaign::first(["id = ?" => $game_id]);
+        if (!$campaign || $campaign->live) {
+            $session->set('Game\delete:$msg', 'Campaign not found!! or Game is published');
+            $this->redirect(RequestMethods::server("HTTP_REFERER", "/admin"));
+        }
+        $participant = Participant::first(["campaign_id = ?" => $campaign->id]);
+        if ($participant) {
+            $session->set('Game\delete:$msg', 'Participant exists! Failed to delete');
+            $this->redirect(RequestMethods::server("HTTP_REFERER", "/admin"));
+        }
+
+        $model = $campaign->type; $game_item = $model . "item";
+        $game = $model::first(["id = ?" => $campaign->type_id]);
+        if (!$game) {
+            $this->redirect("/404");
+        }
+        $game_item = $game_item::first([$model."id = ?" => $game->id]);
+
+        $game->delete();
+        $campaign->delete();
+        $game_item->delete();
+        $session->set('Game\delete:$msg', 'Game deleted');
+        $this->redirect(RequestMethods::server("HTTP_REFERER", "/admin"));
     }
 }

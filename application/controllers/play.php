@@ -63,7 +63,7 @@ class Play extends Admin {
         $dest = $vars['dest'];
 
         $items = ImageTextItem::all(array("imagetext_id = ?" => $game->id, "meta_key = ?" => "gender", "meta_value = ?" => strtolower($this->user->gender)));
-        $key = rand(0, count($items) - 1);
+        srand(); $key = rand(0, count($items) - 1);
         $item = $items[$key];
         
         imagecopymerge($dest, $vars['usr'], $game->usr_x, $game->usr_y, 0, 0, $game->usr_w, $game->usr_h, 100);
@@ -97,7 +97,7 @@ class Play extends Admin {
         $dest = $vars['dest'];
 
         $items = ImageItem::all(array("image_id = ?" => $game->id));
-        $key = rand(0, count($items) - 1);
+        srand(); $key = rand(0, count($items) - 1);
         $item = $items[$key];
         
         imagecopymerge($dest, $vars['usr'], $game->usr_x, $game->usr_y, 0, 0, $game->usr_w, $game->usr_h, 100);
@@ -129,7 +129,7 @@ class Play extends Admin {
         $dest = $vars['dest'];
 
         $items = TextItem::all(array("text_id = ?" => $game->id));
-        $key = rand(0, count($items) - 1);
+        srand(); $key = rand(0, count($items) - 1);
         $item = $items[$key];
         
         imagecopymerge($dest, $vars['usr'], $game->usr_x, $game->usr_y, 0, 0, $game->usr_w, $game->usr_h, 100);
@@ -155,7 +155,7 @@ class Play extends Admin {
         }
 
         $items = ShuffleItem::all(array("shuffle_id = ?" => $game->id, "meta_key = ?" => "gender", "meta_value = ?" => strtolower($this->user->gender)));
-        $key = rand(0, count($items) - 1);
+        srand(); $key = rand(0, count($items) - 1);
         $item = $items[$key];
 
         $vars = array(); $user = $this->user; $path = APP_PATH.'/public/assets/uploads/images/';

@@ -110,6 +110,22 @@ $(document).ready(function() {
         });
     });
 
+    $('.delete').click(function(e) {
+        e.preventDefault();
+        var self = $(this), message = '';
+
+        if (self.data('message')) {
+            message += self.data('message');
+        } else {
+            message += 'Are you sure, you want to proceed with the action?!';
+        }
+        bootbox.confirm(message, function(result) {
+            if (result) {
+                window.location.href = self.attr('href');
+            }
+        });
+    });
+
     $(document).on('change', '#searchField', function(event) {
         var fields = ["created", "modified"],
             date = $.inArray(this.value, fields);
