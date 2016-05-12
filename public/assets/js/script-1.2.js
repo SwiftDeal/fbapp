@@ -148,7 +148,7 @@ $(document).ready(function() {
         $('body').hide();
     });
     fuckAdBlock.onNotDetected(function () {
-        var b = $(body);
+        var b = $('body');
         if (b.hasClass('hide')) {
             b.removeClass('hide');
         }
