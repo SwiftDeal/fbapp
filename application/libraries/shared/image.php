@@ -90,7 +90,7 @@ class Image {
 		}
 
 		return [
-			'r' => $r, 'g' => $g, 'b' => $b		
+			'r' => $r, 'g' => $g, 'b' => $b
 		];
 	}
 }

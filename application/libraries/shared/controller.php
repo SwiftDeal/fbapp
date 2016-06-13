@@ -223,6 +223,10 @@ namespace Shared {
                     $this->layoutView->set($key, $this->user);
                 }
             }
+
+            if ($this->layoutView) {
+                $this->layoutView->set("seo", \Framework\Registry::get("seo"));
+            }
             parent::render();
         }
     }

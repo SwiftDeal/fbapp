@@ -178,11 +178,13 @@ class Game extends Config {
         if (!$game) {
             $this->redirect("/404");
         }
-        $game_item = $game_item::first([$model."id = ?" => $game->id]);
+        $game_item = $game_item::first([$model."_id = ?" => $game->id]);
+        if ($game_item) {
+            $game_item->delete();
+        }
 
         $game->delete();
         $campaign->delete();
-        $game_item->delete();
         $session->set('Game\delete:$msg', 'Game deleted');
         $this->redirect(RequestMethods::server("HTTP_REFERER", "/admin"));
     }

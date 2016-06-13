@@ -211,7 +211,7 @@ class Admin extends Auth {
         $view->set("models", Shared\Markup::models());
     }
 
-    public function sync($model) {
+    protected function sync($model) {
         $this->noview();
         $db = Framework\Registry::get("database");
         $db->sync(new $model);
@@ -231,5 +231,15 @@ class Admin extends Auth {
     public function changeLayout() {
         $this->defaultLayout = "layouts/admin";
         $this->setLayout();
+    }
+
+    protected function install() {
+        $this->willRenderLayoutView = false;
+        $this->willRenderActionView = false;
+        $models = \Shared\Markup::models();
+
+        foreach ($models as $m) {
+            $this->sync($m);
+        }
     }
 }
