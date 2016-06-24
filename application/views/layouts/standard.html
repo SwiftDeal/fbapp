@@ -60,31 +60,6 @@
     <script src="{echo CDN}js/request.js"></script>
     <script src="{echo CDN}js/blockadblock.js"></script>
     <script src="{echo CDN}js/script-1.2.js"></script>
-    <script src="http://adserve.clicks99.com/serve.js"></script>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.Event.subscribe(
-          'ad.loaded',
-          function(placementId) {
-            console.log('Audience Network ad loaded');
-          }
-        );
-        FB.Event.subscribe(
-          'ad.error',
-          function(errorCode, errorMessage, placementId) {
-            console.log('Audience Network error (' + errorCode + ') ' + errorMessage);
-          }
-        );
-      };
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5&appId=1687202661533796";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <div class="fb-ad" data-placementid="1687202661533796_1703114179942644" data-format="300x250" data-testmode="false"></div>
 </body>
 
 </html>
